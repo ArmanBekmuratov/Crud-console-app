@@ -6,28 +6,38 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SkillRepoImpl implements SkillRepo {
 
     private static final String FILENAME = "skills.json";
 
-    public List<Skill> readFile() {
-        Gson gson = new Gson();
-        List<Skill> skillList = null;
-        try (JsonReader reader = new JsonReader(new FileReader(FILENAME))) {
-            Type gsonType = new TypeToken<ArrayList>(){}.getType();
-            skillList = new ArrayList<>(gson.fromJson(reader, gsonType));
-            System.out.println(skillList.get(0));
-        } catch (Exception e) {
+    private static final Type SKILL_TYPE = new TypeToken<List<Skill>>() {
+    }.getType();
+    Gson gson = new Gson();
+    JsonReader reader;
+    {
+        try {
+            reader = new JsonReader(new FileReader(FILENAME));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    List<Skill> skillList = gson.fromJson(reader, SKILL_TYPE); // contains the whole reviews list
+
+
+    public List<Skill> readFile() {
         return skillList;
     }
 
@@ -89,5 +99,17 @@ public class SkillRepoImpl implements SkillRepo {
 
         skillList.removeIf(s -> s.getId().equals(id));
         writeFile(skillList);
+    }
+
+    @Override
+    public Integer getLastId() {
+        List<Skill> skillList = readFile();
+        Collections.sort(skillList, Comparator.comparing(Skill::getId));
+
+        if (skillList.size() != 0) {
+            return skillList.get(skillList.size() - 1).getId();
+        }
+
+        return 0;
     }
 }

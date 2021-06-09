@@ -10,4 +10,5 @@ public interface GenericRepo<T> {
     T save(T object);
     T update(T object);
     void deleteById(Integer id);
+    Integer getLastId();
 }
