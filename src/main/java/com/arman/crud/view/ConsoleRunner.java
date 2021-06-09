@@ -6,18 +6,21 @@ import com.arman.crud.repo.impl.SkillRepoImpl;
 import com.arman.crud.service.SkillService;
 import com.arman.crud.service.impl.SkillServiceImpl;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class ConsoleRunner {
 
     BaseView skillView;
+    BaseView developerView;
+  //  BaseView
 
     private final String damagedDataMessage = "Данные повреждены!";
 
     private final String menuMessage = "Выберете действие:\n" +
-            "1. Категории\n" +
+            "1. Разработчик\n" +
             "2. Навыки\n" +
-            "3. Проекты\n" +
+            "3. Команды\n" +
             "4. Выход";
 
 
@@ -55,10 +58,14 @@ public class ConsoleRunner {
             String response = sc.next();
             switch (response)
             {
+                case "1":
+                    developerView.show();
+                    break;
                 case "2":
                     skillView.show();
                     break;
-
+                /*case "3":
+                    teamView.show();*/
                 case "4":
                     isExit = true;
                     break;
