@@ -1,19 +1,22 @@
 package com.arman.crud.view;
 
+import com.arman.crud.controller.DeveloperController;
 import com.arman.crud.controller.SkillController;
+import com.arman.crud.repo.DeveloperRepo;
 import com.arman.crud.repo.SkillRepo;
+import com.arman.crud.repo.impl.DeveloperRepoImpl;
 import com.arman.crud.repo.impl.SkillRepoImpl;
+import com.arman.crud.service.DeveloperService;
 import com.arman.crud.service.SkillService;
+import com.arman.crud.service.impl.DeveloperServiceImpl;
 import com.arman.crud.service.impl.SkillServiceImpl;
-
-import java.awt.*;
 import java.util.Scanner;
 
 public class ConsoleRunner {
 
     BaseView skillView;
     BaseView developerView;
-  //  BaseView
+
 
     private final String damagedDataMessage = "Данные повреждены!";
 
@@ -29,18 +32,21 @@ public class ConsoleRunner {
     public ConsoleRunner(){
         try {
             //create repo
-            SkillRepo customerRepo = new SkillRepoImpl();
-
+            SkillRepo skillRepo = new SkillRepoImpl();
+            DeveloperRepo developerRepo = new DeveloperRepoImpl();
 
             //create services
-            SkillService skillService = new SkillServiceImpl(customerRepo);
-
+            SkillService skillService = new SkillServiceImpl(skillRepo);
+            DeveloperService developerService = new DeveloperServiceImpl(developerRepo);
 
             //create controllers
             SkillController skillController = new SkillController(skillService);
+            DeveloperController developerController = new DeveloperController(developerService);
+
 
             //create views
             skillView = new SkillView(skillController, sc);
+            developerView = new DeveloperView(developerController, sc);
 
         }
         catch (Exception ex)

@@ -1,10 +1,9 @@
 package com.arman.crud.controller;
-
 import com.arman.crud.model.Developer;
 import com.arman.crud.model.Skill;
 import com.arman.crud.service.DeveloperService;
-
 import java.util.List;
+
 
 public class DeveloperController {
     DeveloperService developerService;
@@ -28,8 +27,8 @@ public class DeveloperController {
         return developerService.save(firstName, lastName);
     }
 
-    public void update(Integer id, String firstName, String lastName, List<Skill> skillList) {
-        developerService.update(id, firstName, lastName, skillList);
+    public void update(Integer id, String firstName, String lastName) {
+        developerService.update(id, firstName, lastName);
     }
 
     public void deleteById(Integer id)  {

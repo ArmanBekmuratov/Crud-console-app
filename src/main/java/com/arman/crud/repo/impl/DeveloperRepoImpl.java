@@ -22,7 +22,7 @@ public class DeveloperRepoImpl implements DeveloperRepo {
 
     private static final String FILENAME = "developers.json";
 
-    private static final Type DEVELOPER_TYPE = new TypeToken<List<Skill>>() {
+    private static final Type DEVELOPER_TYPE = new TypeToken<List<Developer>>() {
     }.getType();
     Gson gson = new Gson();
     JsonReader reader;
@@ -104,7 +104,7 @@ public class DeveloperRepoImpl implements DeveloperRepo {
     @Override
     public Integer getLastId() {
        List<Developer> developerList = readFile();
-        developerList.sort(Comparator.comparing(Developer::getId));
+        Collections.sort(developerList, Comparator.comparing(Developer::getId));
         if (developerList.size() != 0) {
             return developerList.get(developerList.size() - 1).getId();
         }

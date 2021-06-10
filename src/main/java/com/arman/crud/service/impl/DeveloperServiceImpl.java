@@ -43,12 +43,11 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public Developer update(Integer id, String firstName, String lastName, List<Skill> skillList) {
+    public Developer update(Integer id, String firstName, String lastName) {
         Developer developer = new Developer();
         developer.setId(id);
         developer.setFirstName(firstName);
         developer.setLastName(lastName);
-        developer.setSkills(skillList);
         developerRepo.update(developer);
         return developer;
     }
