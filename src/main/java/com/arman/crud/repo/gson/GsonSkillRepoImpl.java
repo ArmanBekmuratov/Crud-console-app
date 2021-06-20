@@ -1,4 +1,4 @@
-package com.arman.crud.repo.impl;
+package com.arman.crud.repo.gson;
 
 import com.arman.crud.model.Skill;
 import com.arman.crud.repo.SkillRepo;
@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SkillRepoImpl implements SkillRepo {
+public class GsonSkillRepoImpl implements SkillRepo {
 
     private static final String FILENAME = "skills.json";
 
@@ -26,6 +26,8 @@ public class SkillRepoImpl implements SkillRepo {
     }.getType();
     Gson gson = new Gson();
     JsonReader reader;
+
+
     {
         try {
             reader = new JsonReader(new FileReader(FILENAME));
@@ -41,8 +43,7 @@ public class SkillRepoImpl implements SkillRepo {
         return skillList;
     }
 
-    @Override
-    public void writeFile(List<Skill> skillList) {
+    private void writeFile(List<Skill> skillList) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         try (FileWriter writer = new FileWriter(FILENAME)) {
@@ -54,31 +55,16 @@ public class SkillRepoImpl implements SkillRepo {
 
     @Override
     public Skill save(Skill skill) {
-        List <Skill> skillList = readFile();
-        if (skillList == null) {
-            skillList = new ArrayList<>();
-            skillList.add(skill);
-        } else if (skillList.isEmpty()) {
-            skillList.add(skill);
-        } else if (!skillList.contains(skill)) {
-            skillList.add(skill);
-        }
-
+        List<Skill> skillList = readFile();
+        skill.setId(getLastId());
+        skillList.add(skill);
         writeFile(skillList);
         return skill;
     }
 
     @Override
     public Skill getById(Integer id) {
-        List <Skill> skillList = readFile();
-        Skill skill = null;
-        for (Skill s : skillList) {
-            if (s.getId().equals(id)) {
-                skill = s;
-                break;
-            }
-        }
-        return skill;
+        return readFile().stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -95,21 +81,12 @@ public class SkillRepoImpl implements SkillRepo {
 
     @Override
     public void deleteById(Integer id) {
-        List <Skill> skillList = readFile();
-
+        List<Skill> skillList = readFile();
         skillList.removeIf(s -> s.getId().equals(id));
         writeFile(skillList);
     }
 
-    @Override
-    public Integer getLastId() {
-        List<Skill> skillList = readFile();
-        Collections.sort(skillList, Comparator.comparing(Skill::getId));
-
-        if (skillList.size() != 0) {
-            return skillList.get(skillList.size() - 1).getId();
-        }
-
-        return 0;
+    private Integer getLastId() {
+        return readFile().stream().map(Skill::getId).findFirst().orElse(1);
     }
 }

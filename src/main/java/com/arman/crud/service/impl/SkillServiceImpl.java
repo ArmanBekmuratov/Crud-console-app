@@ -35,7 +35,6 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public Skill save(String name) {
         Skill skill = new Skill();
-        skill.setId(skillRepo.getLastId() + 1);
         skill.setName(name);
         return skillRepo.save(skill);
     }

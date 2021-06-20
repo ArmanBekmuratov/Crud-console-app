@@ -36,7 +36,6 @@ public class DeveloperServiceImpl implements DeveloperService {
     @Override
     public Developer save(String firstName, String lastName) {
         Developer developer = new Developer();
-        developer.setId(developerRepo.getLastId() + 1);
         developer.setFirstName(firstName);
         developer.setLastName(lastName);
         return developerRepo.save(developer);

@@ -11,19 +11,6 @@ public class Developer {
     public Developer() {
     }
 
-    public Developer(Integer id, String firstName, String lastName, List<Skill> skills) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.skills = skills;
-    }
-
-    public Developer(Integer id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public Integer getId() {
         return id;
     }

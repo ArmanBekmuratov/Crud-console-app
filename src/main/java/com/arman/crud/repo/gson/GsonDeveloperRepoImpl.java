@@ -1,8 +1,9 @@
-package com.arman.crud.repo.impl;
+package com.arman.crud.repo.gson;
 
 import com.arman.crud.model.Developer;
 import com.arman.crud.model.Skill;
 import com.arman.crud.repo.DeveloperRepo;
+import com.arman.crud.repo.TeamRepo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class DeveloperRepoImpl implements DeveloperRepo {
+public class GsonDeveloperRepoImpl implements DeveloperRepo {
 
     private static final String FILENAME = "developers.json";
 
@@ -37,13 +38,11 @@ public class DeveloperRepoImpl implements DeveloperRepo {
     List<Developer> developerList = gson.fromJson(reader, DEVELOPER_TYPE); // contains the whole reviews list
 
 
-    @Override
-    public List<Developer> readFile() {
+    private List<Developer> readFile() {
         return developerList;
     }
 
-    @Override
-    public void writeFile(List<Developer> list) {
+    private void writeFile(List<Developer> developerList) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         try (FileWriter writer = new FileWriter(FILENAME)) {
@@ -55,15 +54,7 @@ public class DeveloperRepoImpl implements DeveloperRepo {
 
     @Override
     public Developer getById(Integer id) {
-       List<Developer> developerList = readFile();
-        Developer developer = null;
-        for (Developer d : developerList) {
-            if (d.getId().equals(id)) {
-                developer = d;
-                break;
-            }
-        }
-        return developer;
+        return readFile().stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -73,16 +64,9 @@ public class DeveloperRepoImpl implements DeveloperRepo {
 
     @Override
     public Developer save(Developer developer) {
-        List <Developer> developerList = readFile();
-        if (developerList == null) {
-            developerList = new ArrayList<>();
-            developerList.add(developer);
-        } else if (developerList.isEmpty()) {
-            developerList.add(developer);
-        } else if (!developerList.contains(developer)) {
-            developerList.add(developer);
-        }
-
+        List<Developer> developerList = readFile();
+        developer.setId(getLastId());
+        developerList.add(developer);
         writeFile(developerList);
         return developer;
     }
@@ -101,14 +85,7 @@ public class DeveloperRepoImpl implements DeveloperRepo {
         writeFile(developerList);
     }
 
-    @Override
-    public Integer getLastId() {
-       List<Developer> developerList = readFile();
-        Collections.sort(developerList, Comparator.comparing(Developer::getId));
-        if (developerList.size() != 0) {
-            return developerList.get(developerList.size() - 1).getId();
-        }
-
-        return 0;
+    private Integer getLastId() {
+        return readFile().stream().map(Developer::getId).findFirst().orElse(1);
     }
 }
