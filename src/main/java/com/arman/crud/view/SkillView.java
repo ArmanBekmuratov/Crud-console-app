@@ -1,7 +1,10 @@
 package com.arman.crud.view;
 
 import com.arman.crud.controller.SkillController;
+import com.arman.crud.model.Developer;
 import com.arman.crud.model.Skill;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -94,6 +97,7 @@ public class SkillView extends BaseView{
             System.out.println(e.getMessage());
             return;
         }
+        skillList.sort(Comparator.comparing(Skill::getId));
         System.out.println(skillList);;
         System.out.println("---------------------------");
         System.out.println(printMenuMessage);

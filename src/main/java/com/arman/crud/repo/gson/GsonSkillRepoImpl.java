@@ -1,6 +1,7 @@
 package com.arman.crud.repo.gson;
 
 import com.arman.crud.model.Skill;
+import com.arman.crud.model.Team;
 import com.arman.crud.repo.SkillRepo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,7 +56,6 @@ public class GsonSkillRepoImpl implements SkillRepo {
     @Override
     public Skill save(Skill skill) {
         List<Skill> skillList = readFile();
-        skill.setId(getLastId());
         skillList.add(skill);
         writeFile(skillList);
         return skill;
@@ -86,7 +85,14 @@ public class GsonSkillRepoImpl implements SkillRepo {
         writeFile(skillList);
     }
 
-    private Integer getLastId() {
-        return readFile().stream().map(Skill::getId).findFirst().orElse(1);
+    public Integer getLastId() {
+        List<Skill> skills = readFile();
+        skills.sort(Comparator.comparing(Skill::getId));
+
+        if (skills.size() != 0) {
+            return skills.get(skills.size() - 1).getId();
+        }
+
+        return 0;
     }
 }

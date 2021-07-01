@@ -13,12 +13,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Comparator;
 import java.util.List;
 
 public class GsonTeamRepoImpl implements TeamRepo {
     private static final String FILENAME = "teams.json";
 
-    private static final Type SKILL_TYPE = new TypeToken<List<Team>>() {
+    private static final Type TEAM_TYPE = new TypeToken<List<Team>>() {
     }.getType();
     Gson gson = new Gson();
     JsonReader reader;
@@ -32,7 +33,7 @@ public class GsonTeamRepoImpl implements TeamRepo {
         }
     }
 
-    List<Team> teamList = gson.fromJson(reader, SKILL_TYPE); // contains the whole reviews list
+    List<Team> teamList = gson.fromJson(reader, TEAM_TYPE); // contains the whole reviews list
 
 
     public List<Team> readFile() {
@@ -52,7 +53,6 @@ public class GsonTeamRepoImpl implements TeamRepo {
     @Override
     public Team save(Team  team) {
         List<Team> teamList = readFile();
-        team.setId(getLastId());
         teamList.add(team);
         writeFile(teamList);
         return team;
@@ -82,7 +82,14 @@ public class GsonTeamRepoImpl implements TeamRepo {
         writeFile(teamList);
     }
 
-    private Integer getLastId() {
-        return readFile().stream().map(Team::getId).findFirst().orElse(1);
+    public Integer getLastId() {
+        List<Team> teamList = readFile();
+        teamList.sort(Comparator.comparing(Team::getId));
+
+        if (teamList.size() != 0) {
+            return teamList.get(teamList.size() - 1).getId();
+        }
+
+        return 0;
     }
 }

@@ -44,14 +44,14 @@ public class ConsoleRunner {
             TeamRepo teamRepo = new GsonTeamRepoImpl();
 
             //create services
-            SkillService skillService = new SkillServiceImpl(skillRepo);
-            DeveloperService developerService = new DeveloperServiceImpl(developerRepo);
-            TeamService teamService = new TeamServiceImpl(teamRepo);
+            SkillService skillService = new SkillServiceImpl();
+            DeveloperService developerService = new DeveloperServiceImpl();
+            TeamService teamService = new TeamServiceImpl();
 
             //create controllers
-            SkillController skillController = new SkillController(skillService);
-            DeveloperController developerController = new DeveloperController(developerService);
-            TeamController teamController = new TeamController(teamService);
+            SkillController skillController = new SkillController();
+            DeveloperController developerController = new DeveloperController();
+            TeamController teamController = new TeamController();
 
 
             //create views
@@ -69,9 +69,9 @@ public class ConsoleRunner {
     public void run()  {
         boolean isExit = false;
         while (true) {
-            System.out.println("----------------------------------------------");
+            System.out.println("---------------------------");
             System.out.println(menuMessage);
-            System.out.println("----------------------------------------------");
+            System.out.println("---------------------------");
             String response = sc.next();
             switch (response)
             {

@@ -6,6 +6,15 @@ public class Team {
     private Integer id;
     private String name;
     private List<Developer> developers;
+    private TeamStatus teamStatus;
+
+    public TeamStatus getTeamStatus() {
+        return teamStatus;
+    }
+
+    public void setTeamStatus(TeamStatus teamStatus) {
+        this.teamStatus = teamStatus;
+    }
 
     public Team(Integer id, String name, List<Developer> developers) {
         this.id = id;
@@ -38,5 +47,15 @@ public class Team {
 
     public void setDevelopers(List<Developer> developers) {
         this.developers = developers;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", developers=" + developers +
+                ", teamStatus=" + teamStatus +
+                '}';
     }
 }

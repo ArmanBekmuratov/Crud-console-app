@@ -42,4 +42,14 @@ public class Developer {
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
+
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", skills=" + skills +
+                '}';
+    }
 }

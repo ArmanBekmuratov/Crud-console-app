@@ -2,15 +2,12 @@ package com.arman.crud.controller;
 
 import com.arman.crud.model.Skill;
 import com.arman.crud.service.SkillService;
+import com.arman.crud.service.impl.SkillServiceImpl;
 
 import java.util.List;
 
 public class SkillController {
-    SkillService skillService;
-
-    public SkillController(SkillService skillService) {
-        this.skillService = skillService;
-    }
+    SkillService skillService = new SkillServiceImpl();
 
     public List<Skill> getAll() {
 

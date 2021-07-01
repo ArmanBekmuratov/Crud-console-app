@@ -18,9 +18,9 @@ public abstract class BaseView {
         boolean isExit = false;
         while (true) {
             print();
-            System.out.println("----------------------------------------------");
+            System.out.println("---------------------------");
             System.out.println(message);
-            System.out.println("----------------------------------------------");
+            System.out.println("---------------------------");
             String response = sc.next();
             switch (response) {
                 case "1":

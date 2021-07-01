@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface DeveloperService extends GenericService<Developer>{
-    Developer save(String firstName, String lastName);
+    Developer save(String firstName, String lastName, List<Integer> skillIds);
 
-    Developer update(Integer id,String firstName, String lastName);
+    Developer update(Integer id,String firstName, String lastName, List<Integer> skillIds);
 }

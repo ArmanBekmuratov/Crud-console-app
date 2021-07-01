@@ -1,15 +1,16 @@
 package com.arman.crud.view;
 
 import com.arman.crud.controller.DeveloperController;
+import com.arman.crud.controller.SkillController;
 import com.arman.crud.model.Developer;
 import com.arman.crud.model.Skill;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class DeveloperView extends BaseView{
 
     private DeveloperController developerController;
+    private SkillController skillController;
 
     private final String mainMenuMessage = "Выберете действие над разработчиком:\n" +
             " 1. Создать\n" +
@@ -19,7 +20,7 @@ public class DeveloperView extends BaseView{
             " 5. Выход";
 
     private final String printMenuMessage = "Список разработчиков:\n" +
-            "ID; название";
+            "ID; Имя; Фамилия";
 
     private final String createMenuMessage = "Добавление разработчика.\n" +
             "Введите имя и фамилию";
@@ -29,6 +30,8 @@ public class DeveloperView extends BaseView{
 
     private final String deleteMenuMessage = "Удаление разработчика\n" +
             "Введите ID";
+
+    private final String answerYes = "y";
 
     public DeveloperView(DeveloperController developerController, Scanner sc) {
         this.developerController = developerController;
@@ -42,12 +45,13 @@ public class DeveloperView extends BaseView{
         System.out.println(createMenuMessage);
         String firstName = sc.next();
         String lastName = sc.next();
+        List<Integer> skillIds = chooseSkills();
         try {
-            developerController.save(firstName, lastName);
+            developerController.save(firstName, lastName,skillIds);
             System.out.println("Successful operation");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Error");
+            System.out.println("Create Error");
         }
         System.out.println("---------------------------");
     }
@@ -60,12 +64,13 @@ public class DeveloperView extends BaseView{
         System.out.println("---------------------------");
         String firstName = sc.next();
         String lastName = sc.next();
+        List<Integer> skillIds = chooseSkills();
         try {
-            developerController.update(id, firstName, lastName);
-            System.out.println("Успешная операция");
+            developerController.update(id, firstName, lastName, skillIds);
+            System.out.println("Successful operation");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Ошибка!");
+            System.out.println("Edit Error");
         }
         System.out.println("---------------------------");
     }
@@ -86,6 +91,23 @@ public class DeveloperView extends BaseView{
         System.out.println("---------------------------");
     }
 
+    private List<Integer> chooseSkills() {
+        List<Integer> skillIds = new ArrayList<>();
+        while(true) {
+            System.out.println("---------------------------");
+            System.out.println("Введите ID навыка ");
+            Integer skillId = sc.nextInt();
+            skillIds.add(skillId);
+            System.out.println("Хотите ли добавить еще навык? y/n");
+            String response = sc.next();
+            if (!response.equalsIgnoreCase(answerYes)) {
+                break;
+            }
+            System.out.println("---------------------------");
+        }
+        return skillIds;
+    }
+
     @Override
     void print() {
         List<Developer> developerList;
@@ -97,15 +119,18 @@ public class DeveloperView extends BaseView{
             System.out.println(e.getMessage());
             return;
         }
-        System.out.println(developerList);;
+       developerList.sort(Comparator.comparing(Developer::getId));
+        System.out.println(developerList);
         System.out.println("---------------------------");
         System.out.println(printMenuMessage);
-        if (developerList != null) {
-            for (Developer d : developerList) {
-                System.out.println(d.getId() + "; " + d.getFirstName() + "; " + d.getLastName());
-            }
-        } else {
-            System.out.println("Список пуст");
+
+        for (Developer d : developerList) {
+
+            String printLine = d.getId() + "; " + d.getFirstName() + "; "
+                    + d.getLastName()  + "; " ;
+            StringJoiner joiner = new StringJoiner("/");
+            printLine += joiner.toString();
+            System.out.println(printLine);
         }
         System.out.println("---------------------------");
     }

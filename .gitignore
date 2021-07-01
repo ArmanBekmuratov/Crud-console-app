@@ -1,9 +1,2 @@
-.idea/*
-
-*.class
-
-*.war
-*.jar
-*.ear
-*.rar
-/out
+3
+/.idea/

@@ -3,7 +3,6 @@ package com.arman.crud.repo.gson;
 import com.arman.crud.model.Developer;
 import com.arman.crud.model.Skill;
 import com.arman.crud.repo.DeveloperRepo;
-import com.arman.crud.repo.TeamRepo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -14,8 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -65,7 +62,6 @@ public class GsonDeveloperRepoImpl implements DeveloperRepo {
     @Override
     public Developer save(Developer developer) {
         List<Developer> developerList = readFile();
-        developer.setId(getLastId());
         developerList.add(developer);
         writeFile(developerList);
         return developer;
@@ -85,7 +81,14 @@ public class GsonDeveloperRepoImpl implements DeveloperRepo {
         writeFile(developerList);
     }
 
-    private Integer getLastId() {
-        return readFile().stream().map(Developer::getId).findFirst().orElse(1);
+    public Integer getLastId() {
+        List<Developer> developerList = readFile();
+        developerList.sort(Comparator.comparing(Developer::getId));
+
+        if (developerList.size() != 0) {
+            return developerList.get(developerList.size() - 1).getId();
+        }
+
+        return 0;
     }
 }

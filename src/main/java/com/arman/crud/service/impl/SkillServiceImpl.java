@@ -2,17 +2,14 @@ package com.arman.crud.service.impl;
 
 import com.arman.crud.model.Skill;
 import com.arman.crud.repo.SkillRepo;
+import com.arman.crud.repo.gson.GsonSkillRepoImpl;
 import com.arman.crud.service.SkillService;
 
 import java.util.List;
 
 public class SkillServiceImpl implements SkillService {
 
-    private SkillRepo skillRepo;
-
-    public SkillServiceImpl(SkillRepo skillRepo) {
-        this.skillRepo = skillRepo;
-    }
+    private GsonSkillRepoImpl skillRepo = new GsonSkillRepoImpl();
 
     public SkillServiceImpl() {
     }
@@ -35,6 +32,7 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public Skill save(String name) {
         Skill skill = new Skill();
+        skill.setId(skillRepo.getLastId() + 1);
         skill.setName(name);
         return skillRepo.save(skill);
     }
