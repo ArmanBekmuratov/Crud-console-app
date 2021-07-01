@@ -12,7 +12,13 @@ Developer -> List skills + Skill skill
 
 Слои:
 
-main.java.com.arman.crud.model - POJO клаcсы main.java.com.arman.crud.repo - классы, реализующие доступ к json с помощью библиотеки gson main.java.com.arman.crud.controller - обработка запросов от пользователя main.java.com.arman.crud.view - все данные, необходимые для работы с консолью
+main.java.com.arman.crud.model - POJO клаcсы 
+
+main.java.com.arman.crud.repo - классы, реализующие доступ к json с помощью библиотеки gson 
+
+main.java.com.arman.crud.controller - обработка запросов от пользователя 
+
+main.java.com.arman.crud.view - все данные, необходимые для работы с консолью
 
 Инструкция по запуску
 
