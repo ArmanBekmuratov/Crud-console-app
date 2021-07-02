@@ -1,1 +1,1 @@
-[{"id":1,"name":"Крутые","developers":[{"id":1,"firstName":"Arman","lastName":"Bekmuratov","skills":[{"id":1,"name":"A"},{"id":2,"name":"V"},{"id":3,"name":"C"}]}],"teamStatus":"ACTIVE"},{"id":2,"name":"Лол","developers":[{"id":2,"firstName":"Ruslan","lastName":"Bekmuratov","skills":[{"id":1,"name":"A"},{"id":2,"name":"V"},{"id":3,"name":"C"}]},{"id":1,"firstName":"Arman","lastName":"Bekmuratov","skills":[{"id":1,"name":"A"},{"id":2,"name":"V"},{"id":3,"name":"C"}]}],"teamStatus":"ACTIVE"}]
+[{"id":1,"name":"Крутые","developers":[null],"teamStatus":"ACTIVE"}]

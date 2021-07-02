@@ -8,17 +8,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 
 public class GsonDeveloperRepoImpl implements DeveloperRepo {
 
-    private static final String FILENAME = "developers.json";
+    private static final String FILENAME = "C:\\Users\\abekm\\Downloads\\Crud-console-app\\Crud-console-app\\src\\main\\resources\\developers.json";
 
     private static final Type DEVELOPER_TYPE = new TypeToken<List<Developer>>() {
     }.getType();

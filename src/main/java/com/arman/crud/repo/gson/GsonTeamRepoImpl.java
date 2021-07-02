@@ -1,6 +1,4 @@
 package com.arman.crud.repo.gson;
-
-import com.arman.crud.model.Skill;
 import com.arman.crud.model.Team;
 import com.arman.crud.repo.TeamRepo;
 import com.google.gson.Gson;
@@ -8,16 +6,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.List;
 
 public class GsonTeamRepoImpl implements TeamRepo {
-    private static final String FILENAME = "teams.json";
+    private static final String FILENAME = "C:\\Users\\abekm\\Downloads\\Crud-console-app\\Crud-console-app\\src\\main\\resources\\teams.json";
 
     private static final Type TEAM_TYPE = new TypeToken<List<Team>>() {
     }.getType();

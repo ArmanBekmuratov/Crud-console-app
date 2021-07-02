@@ -108,11 +108,6 @@ public class TeamView extends BaseView{
                 String printLine = t.getId() + "; " + t.getName() + "; "
                          + t.getDevelopers() ;
                 StringJoiner joiner = new StringJoiner("/");
-                for (Developer d : t.getDevelopers()
-                ) {
-                    joiner.add(d.getFirstName());
-                    joiner.add(d.getLastName());
-                }
                 printLine += joiner.toString();
                 System.out.println(printLine);
             }

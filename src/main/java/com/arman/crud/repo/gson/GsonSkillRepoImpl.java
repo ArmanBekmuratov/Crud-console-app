@@ -8,10 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 
 import java.util.Collections;
@@ -20,7 +17,7 @@ import java.util.List;
 
 public class GsonSkillRepoImpl implements SkillRepo {
 
-    private static final String FILENAME = "skills.json";
+    private static final String FILENAME = "C:\\Users\\abekm\\Downloads\\Crud-console-app\\Crud-console-app\\src\\main\\resources\\skills.json";
 
     private static final Type SKILL_TYPE = new TypeToken<List<Skill>>() {
     }.getType();
